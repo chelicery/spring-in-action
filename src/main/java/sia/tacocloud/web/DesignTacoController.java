@@ -19,13 +19,14 @@ import sia.tacocloud.web.Ingredient.Type;
 @RequestMapping("/design")
 public class DesignTacoController {
 
-    private final static String DESIGN_RESOURCE_NAME = "design";
+    private static final String DESIGN_RESOURCE_NAME = "design";
 
     @GetMapping
     public String showDesignForm(Model model){
         List<Ingredient> ingredients = List.of(
                 new Ingredient("FLTO", "pszenna", Type.WRAP),
                 new Ingredient("COTO", "kukurydziana", Type.WRAP),
+                new Ingredient("GTFR", "gluten free", Type.WRAP),
                 new Ingredient("GRBF", "mielona wołowina", Type.PROTEIN),
                 new Ingredient("CARN", "kawałki mięsa", Type.PROTEIN),
                 new Ingredient("TMTO", "pomidory krojone w kostke", Type.VEGGIE),
@@ -48,7 +49,7 @@ public class DesignTacoController {
     @PostMapping
     public String processDesign(@Valid Taco design, Errors errors){
         if (errors.hasErrors()){
-            log.debug("Designed TACO contains errors:" + errors.toString());
+            log.debug("Designed TACO contains errors:" + errors);
             return DESIGN_RESOURCE_NAME;
         }
         log.info("Przetwarzanie utworzonego projektu Taco:" + design.toString());
