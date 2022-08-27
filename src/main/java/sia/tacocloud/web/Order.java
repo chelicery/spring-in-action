@@ -5,11 +5,19 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 
 @Data
 @RequiredArgsConstructor
 public class Order {
+
+    @NotNull
+    private Long id;
+
+    @NotNull
+    private Date createdAt;
 
     @NotBlank(message = "Imie i nazwisko jest obowiązkowe")
     private String name;
