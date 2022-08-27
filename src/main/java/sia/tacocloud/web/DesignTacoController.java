@@ -1,8 +1,10 @@
 package sia.tacocloud.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import org.springframework.validation.Errors;
 import javax.validation.Valid;
 
 
+import sia.tacocloud.data.IngredientRepository;
+import sia.tacocloud.data.JdbcIngredientRepository;
 import sia.tacocloud.web.Ingredient.Type;
 
 @Slf4j
@@ -20,21 +24,17 @@ import sia.tacocloud.web.Ingredient.Type;
 public class DesignTacoController {
 
     private static final String DESIGN_RESOURCE_NAME = "design";
+    private IngredientRepository ingredientRepository;
+
+    @Autowired
+    public DesignTacoController(IngredientRepository repository){
+        ingredientRepository = repository;
+    }
 
     @GetMapping
     public String showDesignForm(Model model){
-        List<Ingredient> ingredients = List.of(
-                new Ingredient("FLTO", "pszenna", Type.WRAP),
-                new Ingredient("COTO", "kukurydziana", Type.WRAP),
-                new Ingredient("GTFR", "gluten free", Type.WRAP),
-                new Ingredient("GRBF", "mielona wołowina", Type.PROTEIN),
-                new Ingredient("CARN", "kawałki mięsa", Type.PROTEIN),
-                new Ingredient("TMTO", "pomidory krojone w kostke", Type.VEGGIE),
-                new Ingredient("LETC","sałata", Type.VEGGIE),
-                new Ingredient("CHED", "cheddar", Type.CHEESE),
-                new Ingredient("JACK", "Monterey Jack", Type.CHEESE),
-                new Ingredient("SLSA", "pikantny sos pomidorowy", Type.SAUCE),
-                new Ingredient("SRCR", "śmietana", Type.SAUCE));
+        List<Ingredient> ingredients = new ArrayList<>();
+                ingredientRepository.findAll().forEach(ingredients::add);
 
         Type[] types = Ingredient.Type.values();
         for (Type type : types){
