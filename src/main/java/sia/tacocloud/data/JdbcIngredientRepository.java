@@ -14,7 +14,7 @@ public class JdbcIngredientRepository implements IngredientRepository{
     private JdbcTemplate jdbc;
 
     @Autowired
-    public JdbcIngredientRepository(){
+    public JdbcIngredientRepository(JdbcTemplate jdbc){
         this.jdbc = jdbc;
     }
 
