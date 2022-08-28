@@ -7,17 +7,17 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @RequiredArgsConstructor
 public class Order {
 
-    @NotNull
     private Long id;
 
-    @NotNull
-    private Date createdAt;
+    private Date placedAt;
 
     @NotBlank(message = "Imie i nazwisko jest obowiązkowe")
     private String name;
@@ -37,11 +37,18 @@ public class Order {
     @CreditCardNumber(message="Numer karty kredytowej jest nieprawidłowy.")
     private String ccNumber;
 
-    @Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$",
+    @Pattern(regexp="^(0[1-9]|1[0-2])(/)([2-9][\\d])$",
             message="Wartość musi być w formacie MM/RR.")
     private String ccExpiration;
 
     @Digits(integer = 3, fraction = 0, message = "Kod CVV jest nieprawidłowy.")
     private String ccCVV;
 
+    private List<Taco> tacos = new ArrayList<>();
+
+    private List<Taco> designs = new ArrayList<>();
+
+    public void addDesign(Taco saved) {
+        designs.add(saved);
+    }
 }
